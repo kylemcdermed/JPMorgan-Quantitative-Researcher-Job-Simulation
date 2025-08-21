@@ -27,7 +27,7 @@ def estimate_price(input_date, model, historical_data):
         # Find the closest date in historical data
         closest_row = historical_data.loc[historical_data.index == input_date]
         if not closest_row.empty:
-            return float(closest_row['Price'])
+            return float(closest_row['Price'].iloc[0])
         else:
             # Create features from historical trend/seasonality
             month = input_date.month
@@ -46,7 +46,7 @@ def estimate_price(input_date, model, historical_data):
     else:
         # Generate all months from last historical date up to input_date
         future_dates = pd.date_range(start=historical_data.index[-1] + pd.Timedelta(days=30),
-                                     end=input_date, freq='M')
+                                     end=input_date, freq='ME')
         future_time_index = np.arange(last_index + 1, last_index + 1 + len(future_dates))
         future_months = future_dates.month
         
@@ -76,3 +76,14 @@ def estimate_price(input_date, model, historical_data):
         
         # Return predicted price for input_date
         return float(predicted_prices[-1])
+        
+
+# Historical data = `data` from CSV
+# Trained model = `model` from Random Forest
+
+# Predict a historical date
+estimate_price('2021-02-28', model, data) 
+
+# Predict a future date
+estimate_price('2025-12-31', model, data)  # predicted price for end of 2025
+
