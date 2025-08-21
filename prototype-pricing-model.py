@@ -106,3 +106,31 @@ storage_cost_rate3 = 0.0001
 
 value3 = price_storage_contract(injection_dates3, withdrawal_dates3, rate3, max_volume3, storage_cost_rate3, price_func)
 # print(f"Contract Value: ${value3:,.2f}")
+
+
+
+
+
+# Collect contract values from your LP function 
+contract_values = [
+    value1,  # from Example 1
+    value2,  # from Example 2
+    value3   # from Example 3
+]
+
+# Optional: If you want to also store injection/withdrawal dates
+contract_ids = [1, 2, 3]
+contract_info = [
+    {"Contract_ID": 1, "Injection_Dates": '2024-06-30,2024-07-31', "Withdrawal_Dates": '2024-12-31,2025-01-31', "Contract_Value": value1},
+    {"Contract_ID": 2, "Injection_Dates": '2024-04-30,2024-05-31,2024-06-30', "Withdrawal_Dates": '2024-11-30,2024-12-31,2025-01-31', "Contract_Value": value2},
+    {"Contract_ID": 3, "Injection_Dates": '2024-07-31', "Withdrawal_Dates": '2024-12-31', "Contract_Value": value3}
+]
+
+# Convert to DataFrame 
+contract_value_df = pd.DataFrame(contract_info)
+
+# Save to CSV file
+output_path = r"C:\Users\kylem\Prototype_Pricing_Model.csv"
+contract_value_df.to_csv(output_path, index=False)
+
+print(f"Contract value results saved to: {output_path}")
